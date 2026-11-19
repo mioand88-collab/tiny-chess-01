@@ -2,13 +2,15 @@
 
 The strongest chess engine I could fit in 4,096 bytes of Python.
 
-`main.py` (3,767 bytes) is the whole engine: a 0x88-board alpha-beta search
+`main.py` (2,774 bytes) is the whole engine: a 0x88-board alpha-beta search
 with quiescence search, a transposition table and piece-square tables, plus
 an HTTP driver for the competition env (`POST /game`, `POST /move`). It
 searches to a fixed 80,000 nodes per move — no wall clock, no randomness, no
 model calls — so every trial replays identically. The readable source is
-packed with lzma+base85 (explicitly allowed by the rules); the payload and
-the unpacker both count toward the 4,096-byte cap.
+packed with the kit's `makefun compress` (an LZMA stream, explicitly allowed
+by the rules); the payload and the unpacker both count toward the 4,096-byte
+cap. Practice Elo 1279 on the kit's practice trial-0 (3W/0D/3L), above the
+1,154 floor for the final.
 
 Run: `MAKEFUN_ENV_URL=http://<env> python3 -P -s main.py`.
 
